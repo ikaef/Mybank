@@ -1,0 +1,12 @@
+package com.example.mybank.application.rest;
+
+public enum ErreurApi {
+    CLIENT_INTROUVABLE,
+    COMPTE_INEXISTANT,
+    COMPTE_INEXISTANT_POUR_CE_CLIENT,
+
+    TRANSACTION_INEXTISTANTE,
+    TRANSACTION_INEXTISTANTE_POUR_CE_COMPTE,
+    OPERATION_MAL_SAISIE,
+
+}
