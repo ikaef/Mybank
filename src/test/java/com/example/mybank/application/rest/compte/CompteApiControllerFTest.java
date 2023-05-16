@@ -1,7 +1,6 @@
 package com.example.mybank.application.rest.compte;
 
 import jakarta.transaction.Transactional;
-import org.json.JSONArray;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +8,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,7 +27,7 @@ class CompteApiControllerFTest {
     @Test
     void doitRécupérerCompteAvecNuméroCompte() throws Exception {
         var numéroCompte = 1;
-        mockMvc.perform(get("http://localhost:8080/compte/{numéroCompte}", numéroCompte))
+        mockMvc.perform(get("http://localhost:8080/comptes/{numéroCompte}", numéroCompte))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.numeroCompte").value(1))
                 .andExpect(jsonPath("$.client.idClient").value(1))
@@ -43,14 +39,14 @@ class CompteApiControllerFTest {
     @Test
     void doitRetournerCompteInexistantException() throws Exception {
         var numéroCompteInexistant = 20;
-        mockMvc.perform(get("http://localhost:8080/compte/{numéroCompte}", numéroCompteInexistant))
+        mockMvc.perform(get("http://localhost:8080/comptes/{numéroCompte}", numéroCompteInexistant))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void doitRécupérerTousLesComptesDunClientAvecLidClient() throws Exception {
         var idClient = 1;
-        mockMvc.perform(get("http://localhost:8080/compte/client/{idClient}", idClient))
+        mockMvc.perform(get("http://localhost:8080/clients/{idClient}/comptes", idClient))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].numeroCompte").value(1))
                 .andExpect(jsonPath("$[0].client.idClient").value(1))

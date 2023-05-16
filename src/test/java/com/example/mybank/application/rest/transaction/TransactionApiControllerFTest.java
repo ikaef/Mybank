@@ -33,7 +33,7 @@ class TransactionApiControllerFTest {
     @Test
     void doitRécupérérTransactionParId() throws Exception {
         var idTransactionValide = "1124d9e8-6266-4bcf-8035-37a02ba75c69";
-        mockMvc.perform(get("http://localhost:8080/transaction/{idTransaction}", idTransactionValide))
+        mockMvc.perform(get("http://localhost:8080/transactions/{idTransaction}", idTransactionValide))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.idTransaction").value("1124d9e8-6266-4bcf-8035-37a02ba75c69"))
                 .andExpect(jsonPath("$.operation").value("RETRAIT"))
@@ -48,14 +48,14 @@ class TransactionApiControllerFTest {
     @Test
     void doitRetournerExceptionSiIdTransactionInexistant() throws Exception {
         var idTransactionInvalide = "1124d9e8-6266-4bcf-8035-37a02ba75c6a";
-        mockMvc.perform(get("http://localhost:8080/transaction/{idTransaction}", idTransactionInvalide))
+        mockMvc.perform(get("http://localhost:8080/transactions/{idTransaction}", idTransactionInvalide))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void doitRécupérérTransactionParNuméroCompte() throws Exception {
         var numéroCompteValide = 1;
-        mockMvc.perform(get("http://localhost:8080/transaction/compte/{numeroCompte}", numéroCompteValide))
+        mockMvc.perform(get("http://localhost:8080/comptes/{numeroCompte}/transactions", numéroCompteValide))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].idTransaction").value("1124d9e8-6266-4bcf-8035-37a02ba75c69"))
                 .andExpect(jsonPath("$[0].operation").value("RETRAIT"))
@@ -70,7 +70,7 @@ class TransactionApiControllerFTest {
     @Test
     void doitRetournerExceptionSiNuméroCompteInexistant() throws Exception {
         var numéroCompteInexistant = 3546;
-        mockMvc.perform(get("http://localhost:8080/transaction/compte/{numeroCompte}", numéroCompteInexistant))
+        mockMvc.perform(get("http://localhost:8080/compte/{numeroCompte}/transactions", numéroCompteInexistant))
                 .andExpect(status().isNotFound());
 
     }
@@ -78,7 +78,7 @@ class TransactionApiControllerFTest {
     @Test
     void doitRécupérérTransactionParIdClient() throws Exception {
         var idClientValide = 1;
-        mockMvc.perform(get("http://localhost:8080/transaction/compte/{idClient}", idClientValide))
+        mockMvc.perform(get("http://localhost:8080/clients/{idClient}/transactions", idClientValide))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].idTransaction").value("1124d9e8-6266-4bcf-8035-37a02ba75c69"))
                 .andExpect(jsonPath("$[0].operation").value("RETRAIT"))
@@ -93,7 +93,7 @@ class TransactionApiControllerFTest {
     @Test
     void doitRetournerExceptionSiIdClientInexistant() throws Exception {
         var idClientInexistant = 3534;
-        mockMvc.perform(get("http://localhost:8080/transaction/compte/{idClient}", idClientInexistant))
+        mockMvc.perform(get("http://localhost:8080/clients/{idClient}/transactions", idClientInexistant))
                 .andExpect(status().isNotFound());
     }
 

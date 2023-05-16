@@ -1,11 +1,6 @@
 package com.example.mybank.application.rest.client;
 
 
-import com.example.mybank.domain.entities.Client;
-import com.example.mybank.infrastructure.database.client.ClientDatabase;
-import com.example.mybank.infrastructure.database.client.ClientDatabaseRepository;
-import jakarta.transaction.Transactional;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +27,7 @@ class ClientApiControllerFTest {
     @Test
     void doitRécupérerUnClientParID() throws Exception {
         var idIbrahimaFALL = 1;
-        mockMvc.perform(get("http://localhost:8080/client/{id}",idIbrahimaFALL))
+        mockMvc.perform(get("http://localhost:8080/clients/{id}",idIbrahimaFALL))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.idClient").value(idIbrahimaFALL))
                 .andExpect(jsonPath("$.prenom").value("Ibrahima"))
@@ -41,12 +36,12 @@ class ClientApiControllerFTest {
     @Test
     void doitRetournerClientIntrouvableException() throws Exception {
         var idClientInexistant = 20;
-        mockMvc.perform(get("http://localhost:8080/client/{id}", idClientInexistant)).andExpect(status().isNotFound());
+        mockMvc.perform(get("http://localhost:8080/clients/{id}", idClientInexistant)).andExpect(status().isNotFound());
     }
     @Test
     void doitRetournerLaListeDesClients() throws Exception {
         var idIbrahimaFALL = 1;
-        mockMvc.perform(get("http://localhost:8080/client/all")).andExpect(status().isOk());
+        mockMvc.perform(get("http://localhost:8080/clients")).andExpect(status().isOk());
     }
 
 }

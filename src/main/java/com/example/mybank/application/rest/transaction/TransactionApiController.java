@@ -16,7 +16,6 @@ import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/transaction")
 public class TransactionApiController {
 
     private final RecupererTransactionParId récupérerTransactionParId;
@@ -24,25 +23,25 @@ public class TransactionApiController {
     private final RecupererTransactionsParClient récupérerTransactionsParClient;
     private final EnregistrerNouvelleTransaction enregistrerNouvelleTransaction;
 
-    @GetMapping(value = "/{idTransaction}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/transactions/{idTransaction}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public Transaction récupérérTransactionParId(@PathVariable UUID idTransaction) {
         return récupérerTransactionParId.executer(idTransaction);
     }
 
-    @GetMapping(value = "/compte/{numéroCompte}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/comptes/{numéroCompte}/transactions", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Transaction> récupérérTransactionParNuméroCompte(@PathVariable int numéroCompte) {
         return récupérerTransactionParCompte.exécuter(numéroCompte);
     }
 
-    @GetMapping(value = "/client/{idClient}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/clients/{idClient}/transactions", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public List<Transaction> récupérérTransactionParIdClient(@PathVariable int idClient) {
         return récupérerTransactionsParClient.exécuter(idClient);
     }
 
-    @PostMapping(value = "/new" , consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/transaction/new" , consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> enregistrerNouvelleTransaction(@RequestBody TransactionApi transactionApi){
         enregistrerNouvelleTransaction.exécuter(transactionApi);
         return ResponseEntity.ok("Transaction du compte "+
